@@ -1,0 +1,158 @@
+# 14. Crazy JS interview
+
+### 1. What is closure in js is?
+
+A function along with reference to its outer environment together forms a closure in other words we can say
+
+Closure is a combination of function and its lexical scope  bundled together forms a closure 
+
+### 2.Can you explain little bit more about it
+
+    Each and every function in js has access to its outer lexical environment that means like access to variable and functions which is present in the environment of its parent .
+
+Even when this functions are executed in some other scope not in its scope like its original scope  its still remember its outer layer lexical environment 
+
+Example: 
+
+function outer(){
+
+var a=10;
+
+function inner() {
+
+console.log(a);
+
+                               var a=10;(if we move this still it will be Closure) if we change it to let a                                                               variable has block scope but it behaves same way 
+
+}
+
+return inner;
+
+}
+
+outer()();
+
+output 10
+
+what are the double parenthesis : it is like calling the inner function if we just execute inner function  
+
+like var close = outer();
+
+close();
+
+function outset(){
+
+var c=20;
+
+function outer(b){
+
+function inner() {
+
+console.log(a,b,c);
+
+}
+
+let a=10;
+
+return inner;
+
+}
+
+}
+
+let a=100;
+
+var close = (outset())(”hellowworld”);
+
+close();
+
+output: 10 “helloworld” 20
+
+## 15. Advantages of closure
+
+- It is used in module pattern
+- used in function cury
+- closure used in high order function memoize
+- it helps us in data hiding and  encapsulation
+- data hiding is like suppose we have variable and we have data privacy on it and other function or code don’t have access to it ‘
+- we can encapsulate the data so that other function or data cant access data
+- 
+
+Eample
+
+var counter = 0;
+
+function incrementCounter() {
+
+counter++;
+
+}
+
+the major problem of code is anybody in our code access this counter variable and change it so here comes data hiding or data privacy so that nobody can access or change data to achieve this we can use closure we can rap it in the closure 
+
+function counter() {
+
+var counter = 0;
+
+function incrementCounter() {
+
+counter++;
+
+}
+
+}
+
+var counter1 = counter()
+
+counter1();
+
+## 16. Disadvantages of Closures
+
+- Over consumption of memory
+- sometimes those closed over variables are not garbage collected
+- if not handled properly can lead to memory leak
+- What is garbage collector
+    
+    it is the program in  js which kind of freeze up the utilise the memory js is basically high level programming language 
+    
+    whenever there is unused variable it just freeze outs the memory whenever it fines out this variables are not needed 
+    
+    - What is the relation between garbage collection and closure
+        
+        function x() {
+        
+        var x=0;
+        
+        return function b() {
+        
+        console.log(x);
+        
+        }
+        
+        }
+        
+        var y= a();
+        
+        output: 
+        
+        once a execution is completed so x could have been garbage collected but f we have closure 
+        
+        what is smartly collect garbage collected 
+        
+        lets take 
+        
+        function x() {
+        
+        var x=0 z-10;
+        
+        return function b() {
+        
+        console.log(x);
+        
+        }
+        
+        }
+        
+        var y= a();
+        
+        z is not being used is garbage collected smartly

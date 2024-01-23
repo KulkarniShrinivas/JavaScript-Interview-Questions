@@ -1,0 +1,81 @@
+# Interview Questions Promises
+
+1. Promise.all: So if we want to make parallel api calls and get response 
+    
+    suppose you have 10 user  id and you have an api for user info and you want to make 10 parralel api call 
+    
+    it used for multiple promises together promise.all it takes array of promises as input 
+    
+    it  is iterable and array is an iterable there are multiple iterable in js but we are conserned about array 
+    
+    promise.all([p1,p2,p2]) it will make 3 parellel call and get the result and it will wait for all of them to finish and it will collect the result it will give array of output
+    
+    will think of failure if anyone of fails how it acts promise.all([p1,p2,p3]) 1 of the promise get rejected 
+    
+    As soon as any of the promise get rejected and promise.all will throw an error and output will be error and in this case p2 takes 1 sec and after 1 sec will see an error.
+    
+    We can call it as fail Fast
+    
+    ```jsx
+    const p1 = new Promise((resolve, reject) => {
+        setTimeout(() => resolve("P1 sucess"), 3000);
+    })
+    
+    const p2 = new Promise((resolve, reject) => {
+        setTimeout(() => resolve("P2 is sucess"), 1000);
+    })
+    
+    const p3 = new Promise((resolve, reject) => {
+        setTimeout(() => resolve("P3 is Sucess", 2000))
+    })
+    
+    Promise.all([p1,p2,p3]).then(res => {
+        console.log(res);
+    })
+    ```
+    
+    1. Promise.allSetteled: 
+        
+        Promise.allSetteled([p1,p2,p3]) after running willl get same result and result will be [val1,val2,val3]
+        
+        suppose one of them get reject as p2 what will happen is it will wait for all promise to fullfill or to get settled. whether they are success or failure it will and after that specific time 3 sec it will get execute. [val1, err2, val3]
+        
+        In this it waits for all the results  then it will perform action and it depends on use case
+        
+        ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/83e812dd-45dc-45bc-8174-c001d1532e28/3226ddbb-cd13-4a4e-a9c7-fd6c0ef94d9f/Untitled.png)
+        
+        1. Promise.race: 
+            
+            Promise.race([p1,p2,p3]) the person who completes wins the race p1-3sec,p2-1sec, p3-2s
+            
+            after 1 sec it will give the result of value2 that is p2 value of 1st settled promise 
+            
+            what if p2 or p3 fails then error will be thrown that is from p2 or p3 it will return result of first settled promise 
+            
+            In promise.race irrespective of success or failure you are returning the result of 1st one 
+            
+            ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/83e812dd-45dc-45bc-8174-c001d1532e28/e63fd013-6a3a-4c45-a334-8284b998b107/Untitled.png)
+            
+            1. Promise.any:
+                
+                promise.any([p1,p2,p3]) it is similar to race the only diffrence is that it will wait for the first  promise to get successfull here will wait for first success.
+                
+                what if everything fails the return result will  be aggregated error and thie will be arrray of [err1, err2, err3]
+                
+                Seeking first success of an 
+                
+                Lingo: Promise.any will wait for first settled sucess 
+                
+            
+            ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/83e812dd-45dc-45bc-8174-c001d1532e28/d4d8a7bb-de23-483f-8020-91e6c8dfbdce/Untitled.png)
+            
+        
+        Settled
+        
+        /                 \     
+        
+        Resolve       reject
+        
+        Success      failure
+        
+        Fulfilled        rejected
